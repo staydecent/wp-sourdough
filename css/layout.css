@@ -1,0 +1,124 @@
+/*
+    layout.css
+    declare layout, site specific rules.
+
+    01 - Main Site Layout
+    02 - Header
+    03 - Body
+    04 - Sidebar
+    05 - Footer 
+*/
+
+/*
+    01 - Main Site Layout
+*/
+#wrapper {
+    font-size: 1.4em; /* 14px */
+    line-height: 1.6em; 
+    position: relative; 
+    height: 100%;
+    padding-top: 2em;
+    border-top:3px solid #0a0a0a;
+}
+
+/*
+    02 - Header
+*/
+#header {
+    position: relative;
+}
+h1#logo a {
+    font:400 1.5em 'Lobster','Bookman Old Style','URW Bookman L','itc bookman',serif;
+    color:#0a0a0a;
+    text-shadow:0 0 1px #fff;
+}
+h1#logo a:hover {
+    color:#fed73c;
+}
+p#description {
+    font-style:italic;
+    color:#aaa;
+}
+a#to_content {
+    display:none;
+}
+div#menu {
+    margin-top:1em;
+}
+ul#menu-primary > li.menu-item > a {
+    color:#0a0a0a;
+    font-style:italic;
+}
+ul#menu-primary > li.menu-item > a:hover {
+    text-decoration:none;
+    border-bottom:1px solid #0a0a0a;
+}
+
+/*
+    03 - Body
+*/
+#body {
+    padding-top:2em;
+}
+#content {
+    border-right: 1px dashed #ccc;
+}
+div.post {
+    margin: 0 20px 60px 0;
+}
+div.single.post {
+    margin: 0 40px 20px 0;
+}
+div.thumbnail {
+    width: 200px;
+    height: 140px;
+}
+div.excerpt.right {
+    width: 380px;
+}
+div.category {
+    margin: 10px 0;
+}
+/* Comments */
+div#comments > ol {
+    margin-top: 20px;
+    list-style:none outside none; 
+}
+li.li-comment {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px dotted #ccc;
+    list-style: none outside none;
+}
+ul.children > li.li-comment {
+    margin: 20px 0 0 10%;
+    padding-top: 20px;
+    border-top: 1px dotted #ccc;
+    border-bottom: 0;
+}
+div.comment-body {
+    width: 90%;
+}
+div.pagination {
+    padding-top: 20px;
+    border-top: 1px dotted #ccc;
+    width: 100%;
+}
+div.pagination_single {
+    padding: 0 20px 10px 0;
+}
+
+/*
+    04 - Sidebar
+*/
+div#sidebar {
+    padding-top : 42px;
+}
+div.widget {
+    margin-bottom: 60px;
+}
+
+
+/*
+    05 - Footer
+*/

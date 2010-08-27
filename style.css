@@ -1,0 +1,11 @@
+/*
+Theme Name:     Sourdough
+Theme URI:      http://blog.staydecent.ca/sourdough
+Description:    Sourdough is a starter theme for WordPress. It is very basic, but implements some standards and organization.
+Author:         Adrian Unger
+Author URI:     http://staydecent.ca
+Version:        0.0.1
+*/
+
+@import "css/base.css";
+@import "css/layout.css";
