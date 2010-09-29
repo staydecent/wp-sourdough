@@ -1,11 +1,20 @@
-    <div class="grid_4 omega">
-		<div id="primary">	
-		<?php if (!dynamic_sidebar( 'primary-widget-area' )) : ?>
-		<?php endif; ?>
-		</div>
+    <div class="sidebar column third last">
 
-		<div id="secondary">	
-		<?php if (!dynamic_sidebar( 'secondary-widget-area' )) : ?>
+    <?php if ( is_home() ) : ?>
+		<div id="home">	
+		<?php if (!dynamic_sidebar( 'home-sidebar' )) : ?>
 		<?php endif; ?>
 		</div>
+    <?php elseif ( is_single() ) : ?>
+        <div id="single">  
+        <?php if (!dynamic_sidebar( 'single-sidebar' )) : ?>
+        <?php endif; ?>
+        </div>
+    <?php else : ?>
+        <div id="common">  
+        <?php if (!dynamic_sidebar( 'common-sidebar' )) : ?>
+        <?php endif; ?>
+        </div>
+    <?php endif; ?>
+
     </div>

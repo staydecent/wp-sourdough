@@ -1,48 +1,40 @@
-<?php get_header() ?>
+<?php 
+    get_header();
+    //sourdough_before_content();
+?>
 
-	<div id="body">
-		<div class="container">
+	<div id="content" class="column one">
+        <div id="archive">
+		
+		<?php if (have_posts()) : ?>
 
-		<div id="content" class="left">
+		<h2 class="page-title"><?php printf( __( 'Search Results for %s', 'sourdough' ), '&ldquo;'.get_search_query().'&rdquo;' ); ?></h2>
 
-	<?php if (have_posts()) : ?>
+		<?php 
+        while (have_posts()) {
+            the_post();
+            /*
+                See: lib/helpers.php -> sourdough_headline()
+            */
+            sourdough_excerpt( '', 'excerpt-compact' );
+            /*
+                See: lib/helpers.php -> sourdough_pagination()
+            */
+            sourdough_pagination();
+        }
+        ?>
 
-		<h2 class="pagetitle">Search Results</h2>
+        <?php else :
 
-		<div class="navigation">
-			<div class="left"><?php next_posts_link('&larr; Older Entries') ?></div>
-			<div class="right"><?php previous_posts_link('Newer Entries &rarr;') ?></div>
-		</div>
+        	echo "<h2 class=\"page-title\">No posts found. Try a different search.";
+        	get_search_form();
 
+        endif; ?>
 
-		<?php while (have_posts()) : the_post(); ?>
+        </div>
 
-			<div <?php post_class() ?>>
-				<h3 id="post-<?php the_ID(); ?>"><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
-				<small><?php the_time('l, F jS, Y') ?></small>
+        <?php get_sidebar() ?>
 
-				<p class="postmetadata"><?php the_tags('Tags: ', ', ', '<br />'); ?> Posted in <?php the_category(', ') ?> | <?php edit_post_link('Edit', '', ' | '); ?>  <?php comments_popup_link('No Comments &#187;', '1 Comment &#187;', '% Comments &#187;'); ?></p>
-			</div>
-
-		<?php endwhile; ?>
-
-		<div class="navigation">
-			<div class="left"><?php next_posts_link('&larr; Older Entries') ?></div>
-			<div class="right"><?php previous_posts_link('Newer Entries &rarr;') ?></div>
-		</div>
-
-	<?php else : ?>
-
-		<h2 class="center">No posts found. Try a different search?</h2>
-		<?php get_search_form(); ?>
-
-	<?php endif; ?>
-
-		</div><!-- #content -->
-
-<?php get_sidebar() ?>
-
-		</div>
-	</div>
+	</div> <!-- #content -->
 
 <?php get_footer() ?>

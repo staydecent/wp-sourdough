@@ -13,23 +13,43 @@
     01 - Main Site Layout
 */
 #wrapper {
-    font-size: 1.4em; /* 14px */
-    line-height: 1.6em; 
-    position: relative; 
-    height: 100%;
-    padding-top: 2em;
-    border-top:3px solid #0a0a0a;
+    font-size:1.4em; /* 14px */
+    line-height:1.6em; 
+    position:relative; 
+    height:100%;
+    padding-top:2em;
+}
+@media screen and (min-width: 320px) {
+    /* Most handlhelds */
+    .container {
+        width:98%;
+        margin:0 1%;
+    }
+}
+@media screen and (min-width: 800px) {
+    /* Most laptops and monitors */
+    .container {
+        width:80%;
+        margin:0 10%;
+    }
+}
+@media screen and (min-width: 1920px) {
+    /* Big ones */
+    .container {
+        width:60%;
+        margin:0 20%;
+    }
 }
 
 /*
     02 - Header
 */
 #header {
-    position: relative;
+    position:relative;
 }
 h1#logo a {
     font:400 1.5em 'Lobster','Bookman Old Style','URW Bookman L','itc bookman',serif;
-    color:#0a0a0a;
+    color:#1a1a1a;
     text-shadow:0 0 1px #fff;
 }
 h1#logo a:hover {
@@ -37,85 +57,128 @@ h1#logo a:hover {
 }
 p#description {
     font-style:italic;
+    letter-spacing:0.08em;
     color:#aaa;
 }
 a#to_content {
-    display:none;
+    visibility:hidden;
 }
-div#menu {
-    margin-top:1em;
+div.menu {
+    margin:1em 0 0;
 }
-ul#menu-primary > li.menu-item > a {
-    color:#0a0a0a;
+ul.menu {
+    padding:0;
+}
+ul.menu > li.menu-item > a {
+    color:#1a1a1a;
+    font-weight:800;
+}
+ul.menu > li.menu-item > a:hover {
+    text-decoration:none;
+    border-bottom:1px solid #1a1a1a;
+}
+ul.sub-menu > li.menu-item > a {
     font-style:italic;
 }
-ul#menu-primary > li.menu-item > a:hover {
-    text-decoration:none;
-    border-bottom:1px solid #0a0a0a;
+ul.sub-menu > li.menu-item > a:before {
+    content:"→"
 }
 
 /*
     03 - Body
 */
 #body {
-    padding-top:2em;
 }
 #content {
-    border-right: 1px dashed #ccc;
+    padding-top:1em;
+    border-top:1px solid #eee;
 }
-div.post {
-    margin: 0 20px 60px 0;
+div#feature {
+    padding-top:2em;
+    margin-bottom:1em;
+    border-top:1px solid #eee;
 }
-div.single.post {
-    margin: 0 40px 20px 0;
+div#content div.post {
+    margin-bottom:20px;
+}
+div#headlines, div#single, div#archive {
+    width:64%;
+    margin-right:4%;
+    float:left;
+}
+div.headline {
+    margin-bottom:40px;
+}
+div.posts {
+    border-bottom:1px solid #eee;
+    margin-bottom:20px;
+}
+div#single div.post {
+    padding-bottom:20px;
+    border-bottom:1px solid #eee;
+}
+div.posts div.post {
+    height:360px;
+}
+div.byline {
+    margin-bottom:1em;
+    color:#555;
 }
 div.thumbnail {
-    width: 200px;
-    height: 140px;
+    width:300px;
+    height:200px;
+    margin-bottom:1.8em;
+}
+div.post div.image {
+    margin-bottom:1em;
 }
 div.excerpt.right {
-    width: 380px;
+    width:280px;
 }
 div.category {
-    margin: 10px 0;
+    margin:10px 0;
+}
+span.meta-sep {
+    color:#aaa;
 }
 /* Comments */
 div#comments > ol {
-    margin-top: 20px;
+    margin-top:20px;
     list-style:none outside none; 
 }
 li.li-comment {
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px dotted #ccc;
-    list-style: none outside none;
+    margin-bottom:20px;
+    padding-bottom:20px;
+    border-bottom:1px dotted #eee;
+    list-style:none outside none;
 }
 ul.children > li.li-comment {
-    margin: 20px 0 0 10%;
-    padding-top: 20px;
-    border-top: 1px dotted #ccc;
-    border-bottom: 0;
+    margin:20px 0 0 10%;
+    padding-top:20px;
+    border-top:1px dotted #eee;
+    border-bottom:0;
 }
 div.comment-body {
-    width: 90%;
+    width:90%;
 }
 div.pagination {
-    padding-top: 20px;
-    border-top: 1px dotted #ccc;
-    width: 100%;
 }
 div.pagination_single {
-    padding: 0 20px 10px 0;
+    padding:0 20px 10px 0;
 }
 
 /*
     04 - Sidebar
 */
-div#sidebar {
-    padding-top : 42px;
+div.sidebar {
+    padding-top:1em;
+}
+div#primary {
+    font-size:0.85em;
+    line-height:1.6em;
 }
 div.widget {
-    margin-bottom: 60px;
+    margin-bottom:2em;
 }
 
 
