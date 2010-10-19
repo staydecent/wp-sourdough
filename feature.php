@@ -1,8 +1,8 @@
-<div id="feature" class="column one clearfix">
+<div id="feature" class="column twelve clearfix">
 
     <div id="post-<?php the_ID() ?>" class="post">
 
-        <div class="content column third">
+        <div class="content column four">
             <h2 class="title"><a href="<?php the_permalink() ?>" title="Permalink to <?php the_title() ?>" rel="bookmark"><?php the_title() ?></a></h2>
 
             <div class="byline">
@@ -19,7 +19,7 @@
             </div>
         </div>
 
-        <div class="image column half last">
+        <div class="image column eight">
             <a href="<?php the_permalink() ?>" title="Permalink to <?php the_title() ?>" rel="bookmark"><?php the_post_thumbnail('post-image') ?></a>
         </div>
 

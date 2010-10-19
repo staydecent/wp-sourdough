@@ -152,4 +152,34 @@ function sourdough_get_categories( $sep = ', ' ) {
     } 
 }
 endif;
+
+/*
+    Echoes an unordered list of links to all children
+    of the current parent category or page.
+
+    Even when viewing a child page, we find the parent
+    and output all of its children.
+*/
+if (!function_exists('sourdough_list_children')) :
+function sourdough_list_children( ) {
+    if ( is_category() ) {
+        $cat = (int) get_query_var('cat');
+        $term = get_term($cat, 'category');
+        // If a child cat, then list all children of it's parent
+        $parent = ($term->parent) ? (int) $term->parent : $cat;
+        wp_list_categories(array(
+            'child_of' => $parent,
+            'title_li' => ''
+        ));
+    }
+    elseif ( is_page() ) {
+        $page = get_page_by_title(get_the_title());
+        $parent = ($page->post_parent) ? (int) $page->post_parent : $page->ID;
+        wp_list_pages(array(
+            'child_of' => $parent,
+            'title_li' => ''
+        ));
+    }
+}
+endif;
 ?>

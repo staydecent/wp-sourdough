@@ -3,8 +3,8 @@
     //sourdough_before_content();
 ?>
 
-    <div id="content" class="column one">
-        <div id="single">
+    <div id="content" class="column twelve">
+        <div id="single" class="column eight">
 
         <?php
         while ( have_posts() ) {

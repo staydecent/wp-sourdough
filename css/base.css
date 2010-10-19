@@ -156,26 +156,44 @@ a img {
 /* Grid */
 .column {
     float:left;
-    margin:0 4% 0 0;
+    margin:0 20px 0 0;
 }
-.column.last, .column.one {
+.column:last-child, .column.last {
     margin:0;
 }
-.one {
-    width:100%;
+.column.one {
+    width:60px;
 }
-.half {
-    width:46%;
+.column.two {
+    width:140px;
 }
-.third {
-    width:30%;
+.column.three {
+    width:220px;
 }
-.fourth {
-    width:21.5%;
+.column.four {
+    width:300px;
 }
-.fifth {
-    width:16.4%
+.column.five {
+    width:380px;
 }
-.sixth {
-    width:13%;
+.column.six {
+    width:460px;
+}
+.column.seven {
+    width:540px;
+}
+.column.eight {
+    width:620px;
+}
+.column.nine {
+    width:700px;
+}
+.column.ten {
+    width:780px;
+}
+.column.eleven {
+    width:860px;
+}
+.column.twelve {
+    width:940px;
 }

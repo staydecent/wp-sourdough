@@ -59,6 +59,10 @@ function the_relative_date( $fallback = 'F d, Y' ) {
 
 /*
     Load all .php files inside `widget` folder.
+
+    Update 08/10/2010:
+     Changed TEMPLATEPATH -> STYLESHEETPATH
+     to make the path relative to any child theme.
 */
 function load_theme_widgets( $dir = 'widgets' ) {
     $files = wp_cache_get('load_theme_widgets', 'sourdough');
@@ -71,10 +75,10 @@ function load_theme_widgets( $dir = 'widgets' ) {
 
     $files = array();
 
-    if ( $dh = opendir(TEMPLATEPATH.'/'.$dir) ) {
+    if ( $dh = opendir(STYLESHEETPATH.'/'.$dir) ) {
         while ( false !== ($file = readdir($dh)) ) {
-            if ( is_file(TEMPLATEPATH.'/'.$dir.'/'.$file) && strtolower(substr($file, -4, 4)) == ".php" ) {
-                $files[] = TEMPLATEPATH.'/'.$dir.'/'.$file;
+            if ( is_file(STYLESHEETPATH.'/'.$dir.'/'.$file) && strtolower(substr($file, -4, 4)) == ".php" ) {
+                $files[] = STYLESHEETPATH.'/'.$dir.'/'.$file;
             }
         }
         closedir($dh);

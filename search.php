@@ -3,8 +3,8 @@
     //sourdough_before_content();
 ?>
 
-	<div id="content" class="column one">
-        <div id="archive">
+	<div id="content" class="column twelve">
+        <div id="archive" class="column eight">
 		
 		<?php if (have_posts()) : ?>
 

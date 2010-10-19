@@ -82,7 +82,7 @@ endif;
 */
 if (!function_exists( 'sourdough_excerpt_more' )) :
 function sourdough_excerpt_more( $post_excerpt ) {
-    return $post_excerpt.' <a href="'.get_permalink($post->ID).'" class="more">'. __( 'Read More &raquo;', 'sourdough' ).'</a>';
+    return $post_excerpt.' <a href="'.get_permalink().'" class="more">'. __( 'Read More &raquo;', 'sourdough' ).'</a>';
 }
 endif;
 add_filter('wp_trim_excerpt', 'sourdough_excerpt_more');
@@ -107,28 +107,6 @@ function sourdough_excerpt_length( $length ) {
 }
 endif;
 add_filter( 'excerpt_length', 'sourdough_excerpt_length' );
-
-/*
-    Custom Body Class
-    Return the parent class in all cases.
-*/
-if (!function_exists( 'sourdough_parent_class' )) :
-function sourdough_parent_class( $classes ) {
-    // $classes[2] should return: category-<cat_name> 
-    $cat_slug = explode('-', $classes[2], 2);
-    $cat = get_category_by_slug($cat_slug[1]);
-    $parent = get_category( $cat->parent );
-    
-    if(!$parent->errors) {
-        $classes[] = $parent->slug;
-    } else {
-        $classes[] = $cat->slug;
-    }
-
-    return $classes;
-}
-endif;
-add_filter('body_class', 'sourdough_parent_class');
 
 /*
     Return a custom search form.
@@ -156,7 +134,7 @@ if (function_exists('register_sidebar')) {
     register_sidebar( array(
         'name'          => __( 'Header Widget Area', 'sourdough' ),
         'id'            => 'header-widget-area',
-        'description'   => __( 'Widget displayed in the header.', 'sourdough' ),
+        'description'   => __( 'Widgets displayed in the header.', 'sourdough' ),
         'before_widget' => '<div id="%1$s" class="widget %2$s">',
         'after_widget'  => '</div>',
         'before_title'  => '<h3 class="widget-title">',
@@ -165,7 +143,16 @@ if (function_exists('register_sidebar')) {
     register_sidebar( array(
         'name'          => __( 'Homepage Widget Area', 'sourdough' ),
         'id'            => 'home-widget-area',
-        'description'   => __( 'Widget are spanning full-width before the posts loop.', 'sourdough' ),
+        'description'   => __( 'Widgets are spanning full-width before the posts loop.', 'sourdough' ),
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h3 class="widget-title">',
+        'after_title'   => '</h3>',
+    ));
+    register_sidebar( array(
+        'name'          => __( 'Footer Widget Area', 'sourdough' ),
+        'id'            => 'footer-widget-area',
+        'description'   => __( 'Widgets are spanning full-width before the footer.', 'sourdough' ),
         'before_widget' => '<div id="%1$s" class="widget %2$s">',
         'after_widget'  => '</div>',
         'before_title'  => '<h3 class="widget-title">',
