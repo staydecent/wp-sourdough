@@ -10,8 +10,8 @@
 
     Here I'll load the utilities and helpers files.
 */
-require '/lib/utilities.php';
-require '/lib/helpers.php';
+require TEMPLATEPATH.'/lib/utilities.php';
+require TEMPLATEPATH.'/lib/helpers.php';
 /*
     Here we add our own setup function, to encapsulate
     all of our theme support.
@@ -19,9 +19,8 @@ require '/lib/helpers.php';
     Wrapped in an `if`, so, if desired, one can override it
     in a child theme.
 */
-add_action( 'after_setup_theme', 'sourdough_setup' );
-
 if (!function_exists( 'sourdough_setup' )) :
+add_action( 'after_setup_theme', 'sourdough_setup' );
 /* 
     Sets up theme options and features 
 */
