@@ -49,9 +49,10 @@ function sourdough_setup() {
         theme.
     */
     set_post_thumbnail_size(300, 200, true); // Normal post thumbnails (loop)
-    add_image_size('header-image', 960, 300, true); // Permalink thumbnail size
-    add_image_size('post-image', 620, 420, true); // widget thumbnail size
-    add_image_size('square-thumbnail', 50, 50, true); // square thumbnail size
+    add_image_size('header-image', 980, 300, true);
+    add_image_size('post-image', 640, 480, true);
+    add_image_size('large-thumbnail', 130, 130, true);
+    add_image_size('small-thumbnail', 50, 50, true);
 }
 endif;
 

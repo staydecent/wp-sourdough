@@ -14,33 +14,37 @@
     <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
     <?php wp_head(); ?> 
 
-</head> 
-
+</head>
 <body <?php body_class(); ?>> 
 
 <div id="wrapper">
 
+
     <a href="#content" id="to_content">Jump To Content</a>
 
+
     <div id="header" class="container clearfix">
-        <div id="title" class="column four">
+
+        <div id="title" class="column two">
             <h1 id="logo"><a href="<?php bloginfo('home') ?>/" title="<?php echo wp_specialchars( get_bloginfo('name'), 1 ) ?>" rel="home" class="block"><?php echo esc_html( get_bloginfo('name'), 1 ) ?></a></h1>
 
             <p id="description"><?php bloginfo('description') ?></p>
         </div>
 
-        <div id="menu_1" class="menu column two">
+        <div id="menu_1" class="menu column one">
             <?php wp_nav_menu(array( 'container' => '', 'theme_location' => 'menu_1', 'link_before' => '' )); ?>
         </div>
 
-        <div id="menu_2" class="menu column two">
+        <div id="menu_2" class="menu column one">
             <?php wp_nav_menu(array( 'container' => '', 'theme_location' => 'menu_2', 'link_before' => '' )); ?>
         </div>
 
-        <div class="column four last">
-        <?php if (!dynamic_sidebar( 'header-widget-area' )) : ?>
-        <?php endif; ?>
+        <div class="column two">
+            <?php if (!dynamic_sidebar( 'header-widget-area' )) : ?>
+            <?php endif; ?>
         </div>
+
     </div>
+
 
     <div id="body" class="container clearfix">

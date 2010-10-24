@@ -49,6 +49,9 @@ if ( !class_exists( 'SourdoughFeaturedPosts' ) ) :
                 'offset' => 1,
                 'posts_per_page' => (int) $instance['excerpts_count']
             ) );
+
+            echo '<div class="clearfix">';
+
             for ( $post_count = 1; have_posts(); $post_count++) {
                 the_post();
                 $do_not_duplicate[] = $post->ID;
@@ -57,6 +60,8 @@ if ( !class_exists( 'SourdoughFeaturedPosts' ) ) :
                 */
                 sourdough_excerpt( $post_count );
             }
+
+            echo '</div>';
         }
         
         function update( $new_instance, $old_instance ) {

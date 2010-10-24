@@ -20,7 +20,7 @@
     padding-top:2em;
 }
 .container {
-    width:960px;
+    width:980px;
     margin:0 auto;
 }
 
@@ -74,20 +74,16 @@ ul.sub-menu > li.menu-item > a:before {
 }
 #content {
     padding-top:1em;
+    margin-top:2em;
     border-top:1px solid #eee;
 }
 div#feature {
-    padding-top:2em;
+    padding:2em 0;
     margin-bottom:1em;
     border-top:1px solid #eee;
 }
 div#content div.post {
     margin-bottom:20px;
-}
-div#headlines, div#single, div#archive {
-    width:64%;
-    margin-right:4%;
-    float:left;
 }
 div.headline {
     margin-bottom:40px;

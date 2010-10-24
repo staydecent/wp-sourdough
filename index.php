@@ -5,8 +5,8 @@
     <?php if (!dynamic_sidebar( 'home-widget-area' )) : ?>
     <?php endif; ?>
 
-    <div id="content" class="column twelve">
-        <div id="headlines" class="column eight">
+    <div id="content" class="column six">
+        <div id="headlines" class="column four">
 
         <?php 
         /*
