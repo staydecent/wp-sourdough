@@ -14,9 +14,13 @@
 */
 if (!function_exists('sourdough_excerpt')) :
 function sourdough_excerpt( $post_count, $filename = 'excerpt' ) {
-    $f = TEMPLATEPATH.'/'.$filename.'.php';
-    if (file_exists($f)) {
-        include $f;
+    $fs = STYLESHEETPATH.'/'.$filename.'.php';
+    $ft = TEMPLATEPATH.'/'.$filename.'.php';
+    if ( file_exists($fs) ) {
+        include $fs;
+    }
+    elseif ( $ft ) {
+        include $ft;
     }
     else { ?>
     <div id="post-<?php the_ID() ?>" class="post">
@@ -47,9 +51,13 @@ endif;
 */
 if (!function_exists('sourdough_content')) :
 function sourdough_content( $filename = 'content' ) {
-    $f = TEMPLATEPATH.'/'.$filename.'.php';
-    if (file_exists($f)) {
-        include $f;
+    $fs = STYLESHEETPATH.'/'.$filename.'.php';
+    $ft = TEMPLATEPATH.'/'.$filename.'.php';
+    if ( file_exists($fs) ) {
+        include $fs;
+    }
+    elseif ( $ft ) {
+        include $ft;
     }
     else { ?>
     <div id="post-<?php the_ID() ?>" class="post">
@@ -80,9 +88,13 @@ endif;
 */
 if (!function_exists('sourdough_feature')) :
 function sourdough_feature( $filename = 'feature' ) {
-    $f = TEMPLATEPATH.'/'.$filename.'.php';
-    if (file_exists($f)) {
-        include $f;
+    $fs = STYLESHEETPATH.'/'.$filename.'.php';
+    $ft = TEMPLATEPATH.'/'.$filename.'.php';
+    if ( file_exists($fs) ) {
+        include $fs;
+    }
+    elseif ( $ft ) {
+        include $ft;
     }
     else { ?>
     <div id="feature" class="container">
@@ -106,9 +118,13 @@ endif;
 */
 if (!function_exists('sourdough_pagination')) :
 function sourdough_pagination( $filename = 'pagination' ) {
-    $f = TEMPLATEPATH.'/'.$filename.'.php';
-    if (file_exists($f)) {
-        include $f;
+    $fs = STYLESHEETPATH.'/'.$filename.'.php';
+    $ft = TEMPLATEPATH.'/'.$filename.'.php';
+    if ( file_exists($fs) ) {
+        include $fs;
+    }
+    elseif ( $ft ) {
+        include $ft;
     }
     else { 
         if (function_exists('wp_pagenavi')) {
@@ -134,13 +150,15 @@ endif;
         <a href="/category" class="parent-class">cagtegory Name</a>
 */
 if (!function_exists('sourdough_get_categories')) :
-function sourdough_get_categories( $sep = ', ' ) {
+function sourdough_get_categories( $sep = ', ', $before = '', $after = '' ) {
     $total_cats = count(get_the_category());
     $i = 0;
     foreach((get_the_category()) as $cat) {
         ++$i;
         $parent = get_category( $cat->parent );
         $link   = get_category_link( $cat->cat_ID );
+
+        echo $before;
 
         if(!$parent->errors) {
             echo '<a href="'.$link.'" title="'.$cat->name.'" class="'.$parent->slug.'">'.$cat->name.'</a>';
@@ -149,6 +167,8 @@ function sourdough_get_categories( $sep = ', ' ) {
         }
         
         if($i < $total_cats) echo $sep;
+
+        echo $after;
     } 
 }
 endif;

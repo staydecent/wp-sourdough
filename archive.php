@@ -1,6 +1,5 @@
 <?php 
     get_header();
-    //sourdough_before_content();
 ?>
 
 	<div id="content" class="column twelve">
@@ -26,17 +25,10 @@
 		<?php } ?>
 
 		<?php 
-        while (have_posts()) {
-            the_post();
-            /*
-                See: lib/helpers.php -> sourdough_headline()
-            */
-            sourdough_excerpt( '', 'excerpt-compact' );
-            /*
-                See: lib/helpers.php -> sourdough_pagination()
-            */
-            sourdough_pagination();
-        }
+        /*
+            Load the loop to output posts.
+        */
+        get_template_part( 'loop', 'archive' );
         ?>
 
         <?php else :
@@ -54,6 +46,8 @@
         get_search_form();
 
         endif; ?>
+
+        <?php sourdough_pagination();  ?>
 
         </div>
 

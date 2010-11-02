@@ -8,6 +8,29 @@
 */
 
 /*
+    Creates a cache of already displayed posts.
+    Used to avoid duplicates.
+*/
+function do_not_duplicate( $ID = false ) {
+    $posts = wp_cache_get('do_not_duplicate', 'sourdough');
+
+    if ( ! $posts ) {
+        $posts = array();
+    }
+
+    # We're adding a new post.
+    if ( $ID ) {
+        $posts[] = $ID;
+        wp_cache_set('do_not_duplicate', $posts, 'sourdough', 3600);
+        return true;
+    }
+    # We're returning stored posts.
+    else {
+        return $posts;
+    }
+}
+
+/*
     Returns "s" unless $num is "1"
     Used by `relative_date`.
 */
@@ -39,7 +62,7 @@ function get_relative_date( $date ) {
     $diff = round($diff / 7);
     if ($diff < 4)
         return $diff." week".plural($diff)." ago";
-    return "on ".date("F j, Y", strtotime($date));
+    return date("F j, Y", strtotime($date));
 }
 
 /*
@@ -60,6 +83,10 @@ function the_relative_date( $fallback = 'F d, Y' ) {
 /*
     Load all .php files inside `widget` folder.
 
+    Update 24/10/2010:
+     Added statement to check child theme first,
+     then fallback on Sourdough.
+     
     Update 08/10/2010:
      Changed TEMPLATEPATH -> STYLESHEETPATH
      to make the path relative to any child theme.
@@ -75,10 +102,18 @@ function load_theme_widgets( $dir = 'widgets' ) {
 
     $files = array();
 
-    if ( $dh = opendir(STYLESHEETPATH.'/'.$dir) ) {
+    if ( $dh = @opendir(STYLESHEETPATH.'/'.$dir) ) {
         while ( false !== ($file = readdir($dh)) ) {
             if ( is_file(STYLESHEETPATH.'/'.$dir.'/'.$file) && strtolower(substr($file, -4, 4)) == ".php" ) {
                 $files[] = STYLESHEETPATH.'/'.$dir.'/'.$file;
+            }
+        }
+        closedir($dh);
+    }
+    elseif ( $dh = @opendir(TEMPLATEPATH.'/'.$dir) ) {
+        while ( false !== ($file = readdir($dh)) ) {
+            if ( is_file(TEMPLATEPATH.'/'.$dir.'/'.$file) && strtolower(substr($file, -4, 4)) == ".php" ) {
+                $files[] = TEMPLATEPATH.'/'.$dir.'/'.$file;
             }
         }
         closedir($dh);

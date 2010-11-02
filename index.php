@@ -8,7 +8,7 @@
     <div id="content" class="column six">
         <div id="headlines" class="column four">
 
-        <?php 
+        <?php
         /*
             Load the loop to output posts.
         */

@@ -10,18 +10,11 @@
 
 		<h2 class="page-title"><?php printf( __( 'Search Results for %s', 'sourdough' ), '&ldquo;'.get_search_query().'&rdquo;' ); ?></h2>
 
-		<?php 
-        while (have_posts()) {
-            the_post();
-            /*
-                See: lib/helpers.php -> sourdough_headline()
-            */
-            sourdough_excerpt( '', 'excerpt-compact' );
-            /*
-                See: lib/helpers.php -> sourdough_pagination()
-            */
-            sourdough_pagination();
-        }
+		<?php
+        /*
+            Load the loop to output posts.
+        */
+        get_template_part( 'loop', 'archive' );
         ?>
 
         <?php else :

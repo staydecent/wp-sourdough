@@ -1,3 +1,4 @@
+<div id="comments" class="column four right">
 <?php
 
 // Do not delete these lines
@@ -90,3 +91,4 @@
 </div>
 
 <?php endif; // if you delete this the sky will fall on your head ?>
+</div>

@@ -1,3 +1,10 @@
+<?php
+/*
+    Log the ID of the featured post
+    so we can skip it in the main loop.
+*/
+do_not_duplicate(get_the_ID());
+?>
 <div id="feature" class="clearfix">
 
     <div id="post-<?php the_ID() ?>" class="post">

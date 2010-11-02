@@ -44,24 +44,26 @@ if ( !class_exists( 'SourdoughFeaturedPosts' ) ) :
                 Excerpt post loop.
                  If a #feature post exists, do not duplicate.
             */
-            query_posts( array(
-                'post__not_in' => $do_not_duplicate,
-                'offset' => 1,
-                'posts_per_page' => (int) $instance['excerpts_count']
-            ) );
+            if ( (int) $instance['excerpts_count'] > 0 ) {
+                query_posts( array(
+                    'post__not_in' => $do_not_duplicate,
+                    'offset' => 1,
+                    'posts_per_page' => (int) $instance['excerpts_count']
+                ) );
 
-            echo '<div class="clearfix">';
+                echo '<div class="clearfix">';
 
-            for ( $post_count = 1; have_posts(); $post_count++) {
-                the_post();
-                $do_not_duplicate[] = $post->ID;
-                /*
-                    See: lib/helpers.php -> sourdough_excerpt()
-                */
-                sourdough_excerpt( $post_count );
+                for ( $post_count = 1; have_posts(); $post_count++) {
+                    the_post();
+                    $do_not_duplicate[] = $post->ID;
+                    /*
+                        See: lib/helpers.php -> sourdough_excerpt()
+                    */
+                    sourdough_excerpt( $post_count );
+                }
+
+                echo '</div>';
             }
-
-            echo '</div>';
         }
         
         function update( $new_instance, $old_instance ) {

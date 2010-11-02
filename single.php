@@ -1,25 +1,15 @@
 <?php 
     get_header();
-    //sourdough_before_content();
 ?>
 
     <div id="content" class="column twelve">
         <div id="single" class="column eight">
 
         <?php
-        while ( have_posts() ) {
-        	the_post();
-        	/*
-        		See: lib/helpers.php -> sourdough_content()
-        	*/
-        	sourdough_content();
-        
-            comments_template( '', true );
-        }
         /*
-        	See: lib/helpers.php -> sourdough_pagination()
+            Load the loop to output posts.
         */
-        sourdough_pagination();
+        get_template_part( 'loop', 'single' );
         ?>
 
         </div>

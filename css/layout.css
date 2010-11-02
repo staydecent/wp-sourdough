@@ -121,29 +121,59 @@ span.meta-sep {
     color:#aaa;
 }
 /* Comments */
-div#comments > ol {
-    margin-top:20px;
-    list-style:none outside none; 
-}
-li.li-comment {
-    margin-bottom:20px;
-    padding-bottom:20px;
-    border-bottom:1px dotted #eee;
+ol.commentlist > li {
     list-style:none outside none;
+    position:relative;
 }
-ul.children > li.li-comment {
-    margin:20px 0 0 10%;
-    padding-top:20px;
-    border-top:1px dotted #eee;
-    border-bottom:0;
+#comments {
+    clear: both;
 }
-div.comment-body {
-    width:90%;
+.commentlist li.comment {
+    margin: 0 0 24px 0;
+    padding: 0 0 0 56px;
+    position: relative;
 }
-div.pagination {
+.commentlist li:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
 }
-div.pagination_single {
-    padding:0 20px 10px 0;
+.commentlist .avatar {
+    position: absolute;
+    top: 4px;
+    left: 0;
+}
+.comment-meta {
+    margin: 0 0 20px 0;
+}
+.comment-meta a {
+    color:#aaa;
+}
+.reply {
+    padding: 0 0 24px 0;
+}
+.nopassword,
+.nocomments {
+    display: none;
+}
+#comments .pingback {
+    margin-bottom: 18px;
+    padding-bottom: 18px;
+}
+#comments .pingback p {
+    display: block;
+    margin: 0;
+}
+/* Comments form */
+input[type=submit] {
+    color: #333;
+}
+#respond {
+    margin: 24px 0;
+    overflow: hidden;
+    position: relative;
+}
+.children #respond {
+    margin: 0 48px 0 0;
 }
 
 /*

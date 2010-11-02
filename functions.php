@@ -19,7 +19,7 @@ require TEMPLATEPATH.'/lib/helpers.php';
     Wrapped in an `if`, so, if desired, one can override it
     in a child theme.
 */
-if (!function_exists( 'sourdough_setup' )) :
+if ( ! function_exists( 'sourdough_setup' ) ) :
 add_action( 'after_setup_theme', 'sourdough_setup' );
 /* 
     Sets up theme options and features 
@@ -56,7 +56,7 @@ function sourdough_setup() {
 }
 endif;
 
-if (!function_exists( 'sourdough_admin_header_style' )) :
+if ( ! function_exists( 'sourdough_admin_header_style' ) ) :
 /* 
     Styles the header display within the admin panel
 */
@@ -80,7 +80,7 @@ endif;
     Adds a 'continue reading' link to the end
     of *all* excerpts! (auto, more and custom)
 */
-if (!function_exists( 'sourdough_excerpt_more' )) :
+if ( ! function_exists( 'sourdough_excerpt_more' ) ) :
 function sourdough_excerpt_more( $post_excerpt ) {
     return $post_excerpt.' <a href="'.get_permalink().'" class="more">'. __( 'Read More &raquo;', 'sourdough' ).'</a>';
 }
@@ -91,7 +91,7 @@ add_filter('wp_trim_excerpt', 'sourdough_excerpt_more');
     Removes the ellipsis from auto-generated
     exceprts.
 */
-if (!function_exists( 'sourdough_excerpt_ellipsis' )) :
+if ( ! function_exists( 'sourdough_excerpt_ellipsis' ) ) :
 function sourdough_excerpt_ellipsis( $more ) {
     return '&hellip;';
 }
@@ -101,7 +101,7 @@ add_filter('excerpt_more', 'sourdough_excerpt_ellipsis');
 /*
     Set the output length for excerpts.
 */
-if (!function_exists( 'sourdough_excerpt_length' )) :
+if ( ! function_exists( 'sourdough_excerpt_length' ) ) :
 function sourdough_excerpt_length( $length ) {
     return 55;
 }
@@ -112,7 +112,7 @@ add_filter( 'excerpt_length', 'sourdough_excerpt_length' );
     Return a custom search form.
     No need for a searchform.php
 */
-if (!function_exists('sourdough_search_form')) :
+if ( ! function_exists('sourdough_search_form') ) :
 function sourdough_search_form( $form ) {
     $form = '<form role="search" method="get" id="searchform" action="' . trailingslashit(get_bloginfo('url')) . '">';
     $form .= '<div class="clearfix">';
@@ -127,10 +127,58 @@ endif;
 add_filter('get_search_form', 'sourdough_search_form');
 
 /*
+    Comment template
+*/
+if ( ! function_exists('sourdough_comment') ) :
+function sourdough_comment( $comment, $args, $depth ) {
+    die();
+    $GLOBALS['comment'] = $comment;
+    switch ( $comment->comment_type ) :
+        case '' :
+    ?>
+    <li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
+        <div id="comment-<?php comment_ID(); ?>">
+        <div class="comment-author vcard">
+            <?php echo get_avatar( $comment, 40 ); ?>
+            <?php printf( __( '%s <span class="says">says:</span>', 'twentyten' ), sprintf( '<cite class="fn">%s</cite>', get_comment_author_link() ) ); ?>
+        </div><!-- .comment-author .vcard -->
+        <?php if ( $comment->comment_approved == '0' ) : ?>
+            <em><?php _e( 'Your comment is awaiting moderation.', 'twentyten' ); ?></em>
+            <br />
+        <?php endif; ?>
+
+        <div class="comment-meta commentmetadata"><a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>">
+            <?php
+                /* translators: 1: date, 2: time */
+                printf( __( '%1$s at %2$s', 'twentyten' ), get_comment_date(),  get_comment_time() ); ?></a><?php edit_comment_link( __( '(Edit)', 'twentyten' ), ' ' );
+            ?>
+        </div><!-- .comment-meta .commentmetadata -->
+
+        <div class="comment-body"><?php comment_text(); ?></div>
+
+        <div class="reply">
+            <?php comment_reply_link( array_merge( $args, array( 'depth' => $depth, 'max_depth' => $args['max_depth'] ) ) ); ?>
+        </div><!-- .reply -->
+    </div><!-- #comment-##  -->
+
+    <?php
+            break;
+        case 'pingback'  :
+        case 'trackback' :
+    ?>
+    <li class="post pingback">
+        <p><?php _e( 'Pingback:', 'twentyten' ); ?> <?php comment_author_link(); ?><?php edit_comment_link( __('(Edit)', 'twentyten'), ' ' ); ?></p>
+    <?php
+            break;
+    endswitch;
+}
+endif;
+
+/*
     Make EVERYTHING more flexible and dynamic.
 */
-if (function_exists('register_sidebar')) {
-/* Test performance vs widgets_init hook */
+if ( ! function_exists('sourdough_widgets_init')) :
+function sourdough_widgets_init() {
     register_sidebar( array(
         'name'          => __( 'Header Widget Area', 'sourdough' ),
         'id'            => 'header-widget-area',
@@ -186,5 +234,6 @@ if (function_exists('register_sidebar')) {
         'after_title'   => '</h3>',
     ));
 }
-
+endif;
+add_action( 'widgets_init', 'sourdough_widgets_init' );
 ?>
