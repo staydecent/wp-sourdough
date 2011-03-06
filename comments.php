@@ -1,4 +1,4 @@
-<div id="comments" class="column four right">
+<div id="comments">
 <?php
 
 // Do not delete these lines
@@ -16,7 +16,7 @@
 
 <?php if ( have_comments() ) : ?>
 
-	<h3 id="comments"><?php comments_number('No Responses', 'One Response', '% Responses' );?> to &#8220;<?php the_title(); ?>&#8221;</h3>
+	<h4 id="comments" class="title"><?php comments_number('0 Comments', '1 Comment', '% Comments' );?></h4>
 
 	<div class="navigation clearfix">
 		<div class="left"><?php next_posts_link('&larr; Older Entries') ?></div>
@@ -24,7 +24,7 @@
 	</div>
 
 	<ol class="commentlist">
-	<?php wp_list_comments(); ?>
+	<?php wp_list_comments( array( 'callback' => 'sourdough_comment' ) ); ?>
 	</ol>
 
 	<div class="navigation clearfix">

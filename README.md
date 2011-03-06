@@ -1,26 +1,12 @@
 # Sourdough
 Your WordPress Starter
 
-## Concept
+Check out the [blog post](http://blog.staydecent.ca/entry/your-wordpress-theme) for an introduction.
 
-Sourdough is a starting point for your next WordPress theme. It offers some helpful functions, easy to understand organization and professional HTML & CSS.
+### The Markup
 
-## Helper Functions
+Is simple, clean and tested. It's based off of my [HTML-Prototype](https://github.com/staydecent/HTML-Prototype) and encompasses my [Best Practices](https://docs.google.com/document/pub?id=1Svkl4xhAnLDwVB2_eEGZ_uFHFABLt5to_ir6kiV44-E). The main goal was to make the markup easier to read and potentially replace compared to Twenty Ten (which is also a great theme starting point).
 
-Sourdough has some basic helper functions that assist in separating theme files and creating unique blocks of content.
+### functions.php
 
-## Organization
-
-Sourdough breaks up content. But, doesn't introduce a mass of folders and files. This small step towards better organization will allow you to work simultaneously with coworkers without stepping on each others feet. And, because Sourdough is flexible you can easily adapt it to your own organization structure.
-
-## Design
-
-Sourdough comes with professional markup and styling and looks beautiful without any editing.
-
-## What You Can Do With Sourdough
-
-- Use it as-is and have a beautiful, clean blog.
-- Directly customize the CSS and create a custom, unique theme.
-- Create a child-theme, for personal or commercial use.
-- Submit a child-theme to the showcase. Release it for free or sell it.
-- Hack it, fork it, and contribute.
+The backbone of your theme! Besides loading the utility functions, theme helpers and any specified Custom Post Types, the `functions.php` sets up all of the basic, and common theme options: post-thumbnails, feed links, custom backgrounds and headers and menus. It also specifies the attributes of excerpts, and contains the search form and comments markup (from twenty-ten).

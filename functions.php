@@ -1,239 +1,192 @@
 <?php
+
 /*
-    I tried not to create too much of a new 
-    folder structure from what themers are used to.
-    So I broke up my functions as follows:
+Theme functions and content types.
+Based on Sourdough (0.1.5) by Adrian Unger.
 
-    - Generic UDF's (lib/utilities.php)
-    - Theme Helpers (lib/helpers.php)
-    - Theme support & Filters (this file)
+## Table of Contents
+ 01 - Load libraries & content types
+ 02 - Setup theme options
+ 03 - Content filters
+*/
 
-    Here I'll load the utilities and helpers files.
+/*
+    01 - Load libraries & content types
 */
 require TEMPLATEPATH.'/lib/utilities.php';
 require TEMPLATEPATH.'/lib/helpers.php';
-/*
-    Here we add our own setup function, to encapsulate
-    all of our theme support.
+require TEMPLATEPATH.'/lib/widgets.php';
 
-    Wrapped in an `if`, so, if desired, one can override it
-    in a child theme.
+$content_types = array(
+    ''
+);
+foreach ($content_types as $type) {
+    $file = TEMPLATEPATH.'/lib/content_types/'.$type.'.php';
+    if (is_file($file)) {
+        include $file; 
+    }
+}
+
+/*
+    02 - Setup theme options
 */
-if ( ! function_exists( 'sourdough_setup' ) ) :
-add_action( 'after_setup_theme', 'sourdough_setup' );
-/* 
-    Sets up theme options and features 
-*/
-function sourdough_setup() {
-    /*
-        Theme Support
-    */
-    add_theme_support('post-thumbnails');
-    add_theme_support('automatic-feed-links');
-    add_custom_background();
-    load_theme_widgets();
-    /*
-        Enable custom menus
-    */
-    register_nav_menus(array(
-        'menu_1' => __( 'Menu 1', 'sourdough' ),
-        'menu_2' => __( 'Menu 2', 'sourdough' ),
-        'menu_3' => __( 'Menu 3', 'sourdough' ),
-    ));
-    /*
+add_action('after_setup_theme', 'sourdough_setup');
+
+if (!function_exists( 'sourdough_setup')) {
+    function sourdough_setup() {
+        // Theme support
+        add_theme_support('post-thumbnails');
+        add_theme_support('automatic-feed-links');
+        add_custom_background();
+        load_theme_widgets();
+        // Enable custom menus
+        register_nav_menus(array(
+            'menu_1' => __( 'Menu 1', 'sourdough' ),
+            'menu_2' => __( 'Menu 2', 'sourdough' ),
+        ));
+        /*
         Post thumbnail settings
         
         There are some predefined sizes registered
         below. But, it is suggested that you define
         any thumbnail dimensions you need for your
         theme.
-    */
-    set_post_thumbnail_size(300, 200, true); // Normal post thumbnails (loop)
-    add_image_size('header-image', 980, 300, true);
-    add_image_size('post-image', 640, 480, true);
-    add_image_size('large-thumbnail', 130, 130, true);
-    add_image_size('small-thumbnail', 50, 50, true);
+        */
+        set_post_thumbnail_size(252, 252, true); // Normal post thumbnails (loop)
+        add_image_size('post-image', 745);
+        add_image_size('medium-thumbnail', 170, 170, true);
+        add_image_size('small-thumbnail', 50, 50, true);
+    }
 }
-endif;
 
-if ( ! function_exists( 'sourdough_admin_header_style' ) ) :
-/* 
-    Styles the header display within the admin panel
-*/
-function sourdough_admin_header_style() {
-?>
-<style type="text/css">
-#headimg {
-    border:1px solid #000;
-    border-width:1px 0;
+add_action('init', 'sourdough_init');
+
+function sourdough_init() {
+    // site specific stuff
+    wp_enqueue_script('sourdough', get_bloginfo('stylesheet_directory').'/assets/js/site.js', array('jquery'), '1.0');
 }
-/* If NO_HEADER_TEXT is false, you would style the text with these selectors:
-    #headimg #name { }
-    #headimg #desc { }
-*/
-</style>
-<?php
+
+add_action('admin_init', 'admin_init');
+
+function admin_init() {
+    // enhance admin meta boxes
 }
-endif;
 
 /*
-    Adds a 'continue reading' link to the end
-    of *all* excerpts! (auto, more and custom)
+    03 - Content filters
 */
-if ( ! function_exists( 'sourdough_excerpt_more' ) ) :
-function sourdough_excerpt_more( $post_excerpt ) {
-    return $post_excerpt.' <a href="'.get_permalink().'" class="more">'. __( 'Read More &raquo;', 'sourdough' ).'</a>';
+if (!function_exists( 'sourdough_admin_header_style')) {
+    function sourdough_admin_header_style() {
+    // Styles the header display within the admin panel
+    ?>
+    <style type="text/css">
+    #headimg {
+        border:1px solid #000;
+        border-width:1px 0;
+    }
+    /* If NO_HEADER_TEXT is false, you would style the text with these selectors:
+        #headimg #name { }
+        #headimg #desc { }
+    */
+    </style>
+    <?php
+    }
 }
-endif;
+
+if (!function_exists( 'sourdough_excerpt_more')) {
+    function sourdough_excerpt_more( $post_excerpt ) {
+        /*
+        Adds a 'continue reading' link to the end
+        of *all* excerpts! (auto, more and custom)
+        */
+        return $post_excerpt.'<br><a href="'.get_permalink().'" class="more">'. __( 'Read More', 'sourdough' ).'</a>';
+    }
+}
 add_filter('wp_trim_excerpt', 'sourdough_excerpt_more');
 
-/*
-    Removes the ellipsis from auto-generated
-    exceprts.
-*/
-if ( ! function_exists( 'sourdough_excerpt_ellipsis' ) ) :
-function sourdough_excerpt_ellipsis( $more ) {
-    return '&hellip;';
+if (!function_exists( 'sourdough_excerpt_ellipsis')) {
+    function sourdough_excerpt_ellipsis( $more ) {
+        /*
+        Removes the ellipsis from auto-generated
+        exceprts.
+        */
+        return '&hellip;';
+    }
 }
-endif;
 add_filter('excerpt_more', 'sourdough_excerpt_ellipsis');
 
-/*
-    Set the output length for excerpts.
-*/
-if ( ! function_exists( 'sourdough_excerpt_length' ) ) :
-function sourdough_excerpt_length( $length ) {
-    return 55;
+if (!function_exists( 'sourdough_excerpt_length')) {
+    function sourdough_excerpt_length( $length ) {
+        /*
+        Set the output length for excerpts.
+        */
+        return 20;
+    }
 }
-endif;
 add_filter( 'excerpt_length', 'sourdough_excerpt_length' );
 
-/*
-    Return a custom search form.
-    No need for a searchform.php
-*/
-if ( ! function_exists('sourdough_search_form') ) :
-function sourdough_search_form( $form ) {
-    $form = '<form role="search" method="get" id="searchform" action="' . trailingslashit(get_bloginfo('url')) . '">';
-    $form .= '<div class="clearfix">';
-    $form .= '<input type="text" name="s" id="s" class="left" placeholder="Search" value="' . get_search_query() . '" />';
-    $form .= '<input type="submit" name="searchsubmit" id="searchsubmit" class="left" value="&rarr;" />';
-    $form .= '</div>';
-    $form .= '</form>'; 
+if (!function_exists('sourdough_search_form')) {
+    function sourdough_search_form( $form ) {
+        /*
+        Return a custom search form.
+        No need for a searchform.php
+        */
+        $form = '<form role="search" method="get" id="searchform" action="' . trailingslashit(get_bloginfo('url')) . '">';
+        $form .= '<div class="clearfix">';
+        $form .= '<input type="text" name="s" id="s" class="left" placeholder="Search" value="' . get_search_query() . '" />';
+        $form .= '<input type="submit" name="searchsubmit" id="searchsubmit" class="left" value="&rarr;" />';
+        $form .= '</div>';
+        $form .= '</form>'; 
 
-    return $form;
+        return $form;
+    }
 }
-endif;
 add_filter('get_search_form', 'sourdough_search_form');
 
-/*
-    Comment template
-*/
-if ( ! function_exists('sourdough_comment') ) :
-function sourdough_comment( $comment, $args, $depth ) {
-    die();
-    $GLOBALS['comment'] = $comment;
-    switch ( $comment->comment_type ) :
-        case '' :
-    ?>
-    <li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
-        <div id="comment-<?php comment_ID(); ?>">
-        <div class="comment-author vcard">
-            <?php echo get_avatar( $comment, 40 ); ?>
-            <?php printf( __( '%s <span class="says">says:</span>', 'twentyten' ), sprintf( '<cite class="fn">%s</cite>', get_comment_author_link() ) ); ?>
-        </div><!-- .comment-author .vcard -->
-        <?php if ( $comment->comment_approved == '0' ) : ?>
-            <em><?php _e( 'Your comment is awaiting moderation.', 'twentyten' ); ?></em>
-            <br />
-        <?php endif; ?>
+if (!function_exists('sourdough_comment')) {
+    function sourdough_comment( $comment, $args, $depth ) {
+        /*
+        Comment template
+        */
+        $GLOBALS['comment'] = $comment;
+        switch ( $comment->comment_type ) :
+            case '' :
+        ?>
+        <li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
+            <div id="comment-<?php comment_ID(); ?>">
+            <div class="comment-author vcard">
+                <?php echo get_avatar( $comment, 125 ); ?>
+                <?php printf( __( '%s', 'sourdough' ), sprintf( '<cite class="fn">%s</cite>', get_comment_author_link() ) ); ?>
+            </div><!-- .comment-author .vcard -->
+            <?php if ( $comment->comment_approved == '0' ) : ?>
+                <em><?php _e( 'Your comment is awaiting moderation.', 'sourdough' ); ?></em>
+                <br />
+            <?php endif; ?>
 
-        <div class="comment-meta commentmetadata"><a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>">
-            <?php
-                /* translators: 1: date, 2: time */
-                printf( __( '%1$s at %2$s', 'twentyten' ), get_comment_date(),  get_comment_time() ); ?></a><?php edit_comment_link( __( '(Edit)', 'twentyten' ), ' ' );
-            ?>
-        </div><!-- .comment-meta .commentmetadata -->
+            <div class="comment-meta commentmetadata">
+                <a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>"><?php the_relative_date();  ?></a>
 
-        <div class="comment-body"><?php comment_text(); ?></div>
+                <?php edit_comment_link( __( '(Edit)', 'sourdough' ), ' ' ); ?>
+            </div><!-- .comment-meta .commentmetadata -->
 
-        <div class="reply">
-            <?php comment_reply_link( array_merge( $args, array( 'depth' => $depth, 'max_depth' => $args['max_depth'] ) ) ); ?>
-        </div><!-- .reply -->
-    </div><!-- #comment-##  -->
+            <div class="comment-body"><?php comment_text(); ?></div>
 
-    <?php
-            break;
-        case 'pingback'  :
-        case 'trackback' :
-    ?>
-    <li class="post pingback">
-        <p><?php _e( 'Pingback:', 'twentyten' ); ?> <?php comment_author_link(); ?><?php edit_comment_link( __('(Edit)', 'twentyten'), ' ' ); ?></p>
-    <?php
-            break;
-    endswitch;
+            <div class="reply">
+                <?php comment_reply_link( array_merge( $args, array( 'depth' => $depth, 'max_depth' => $args['max_depth'] ) ) ); ?>
+            </div><!-- .reply -->
+        </div><!-- #comment-##  -->
+
+        <?php
+                break;
+            case 'pingback'  :
+            case 'trackback' :
+        ?>
+        <li class="post pingback">
+            <p><?php _e( 'Pingback:', 'sourdough' ); ?> <?php comment_author_link(); ?><?php edit_comment_link( __('(Edit)', 'sourdough'), ' ' ); ?></p>
+        <?php
+                break;
+        endswitch;
+    }
 }
-endif;
 
-/*
-    Make EVERYTHING more flexible and dynamic.
-*/
-if ( ! function_exists('sourdough_widgets_init')) :
-function sourdough_widgets_init() {
-    register_sidebar( array(
-        'name'          => __( 'Header Widget Area', 'sourdough' ),
-        'id'            => 'header-widget-area',
-        'description'   => __( 'Widgets displayed in the header.', 'sourdough' ),
-        'before_widget' => '<div id="%1$s" class="widget %2$s">',
-        'after_widget'  => '</div>',
-        'before_title'  => '<h3 class="widget-title">',
-        'after_title'   => '</h3>',
-    ));
-    register_sidebar( array(
-        'name'          => __( 'Homepage Widget Area', 'sourdough' ),
-        'id'            => 'home-widget-area',
-        'description'   => __( 'Widgets are spanning full-width before the posts loop.', 'sourdough' ),
-        'before_widget' => '<div id="%1$s" class="widget %2$s">',
-        'after_widget'  => '</div>',
-        'before_title'  => '<h3 class="widget-title">',
-        'after_title'   => '</h3>',
-    ));
-    register_sidebar( array(
-        'name'          => __( 'Footer Widget Area', 'sourdough' ),
-        'id'            => 'footer-widget-area',
-        'description'   => __( 'Widgets are spanning full-width before the footer.', 'sourdough' ),
-        'before_widget' => '<div id="%1$s" class="widget %2$s">',
-        'after_widget'  => '</div>',
-        'before_title'  => '<h3 class="widget-title">',
-        'after_title'   => '</h3>',
-    ));
-    register_sidebar( array(
-        'name'          => __( 'Homepage Sidebar', 'sourdough' ),
-        'id'            => 'home-sidebar',
-        'description'   => __( 'The sidebar displayed on the homepage.', 'sourdough' ),
-        'before_widget' => '<div id="%1$s" class="widget %2$s">',
-        'after_widget'  => '</div>',
-        'before_title'  => '<h3 class="widget-title">',
-        'after_title'   => '</h3>',
-    ));
-    register_sidebar( array(
-        'name'          => __( 'Single page Sidebar', 'sourdough' ),
-        'id'            => 'single-sidebar',
-        'description'   => __( 'The sidebar displayed on single posts.', 'sourdough' ),
-        'before_widget' => '<div id="%1$s" class="widget %2$s">',
-        'after_widget'  => '</div>',
-        'before_title'  => '<h3 class="widget-title">',
-        'after_title'   => '</h3>',
-    ));
-    register_sidebar( array(
-        'name'          => __( 'Common Sidebar', 'sourdough' ),
-        'id'            => 'common-sidebar',
-        'description'   => __( 'The common sidebar.', 'sourdough' ),
-        'before_widget' => '<div id="%1$s" class="widget %2$s">',
-        'after_widget'  => '</div>',
-        'before_title'  => '<h3 class="widget-title">',
-        'after_title'   => '</h3>',
-    ));
-}
-endif;
-add_action( 'widgets_init', 'sourdough_widgets_init' );
 ?>

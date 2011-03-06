@@ -1,52 +1,88 @@
-<?php 
-/*
-    Sourdough Utilities
+<?php
+function sourdough_get_posts($type = 'post', $key = null, $value = null, $count = -1, $last = 2) {
+    /*
+    Custom queries to speed up CPT searches.
+    */
+    global $wpdb;
 
-    01 - plural
-    02 - get_relative_date
-    03 - the_relative_date
-*/
+    if ($key == null && $value == null) {
+        $querystr = "
+            SELECT wposts.* 
+            FROM $wpdb->posts wposts
+            WHERE wposts.post_type = '{$type}' 
+            AND wposts.post_status = 'publish' 
+            ORDER BY wposts.post_date DESC
+            LIMIT {$count}
+            ";
+    }
+    else {
+        $querystr = "
+            SELECT wposts.* 
+            FROM $wpdb->posts wposts, $wpdb->postmeta wpostmeta
+            WHERE wposts.ID = wpostmeta.post_id 
+            AND wpostmeta.meta_key = '{$key}' 
+            AND wpostmeta.meta_value = '{$value}' 
+            AND wposts.post_type = '{$type}' 
+            AND wposts.post_status = 'publish' 
+            ORDER BY wposts.post_date DESC
+            LIMIT {$count}
+            ";
+    }
 
-/*
+    $result = $wpdb->get_results($querystr, OBJECT);
+    return $result;
+}
+
+// Curl helper function
+function curl_get($url) {
+    $curl = curl_init($url);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+    $return = curl_exec($curl);
+    curl_close($curl);
+    return $return;
+}
+
+function do_not_duplicate( $ID = false ) {
+    /*
     Creates a cache of already displayed posts.
     Used to avoid duplicates.
-*/
-function do_not_duplicate( $ID = false ) {
+    */
     $posts = wp_cache_get('do_not_duplicate', 'sourdough');
 
     if ( ! $posts ) {
         $posts = array();
     }
 
-    # We're adding a new post.
+    // We're adding a new post.
     if ( $ID ) {
         $posts[] = $ID;
         wp_cache_set('do_not_duplicate', $posts, 'sourdough', 3600);
         return true;
     }
-    # We're returning stored posts.
+    // We're returning stored posts.
     else {
         return $posts;
     }
 }
 
-/*
+function plural( $num ) {
+    /*
     Returns "s" unless $num is "1"
     Used by `relative_date`.
-*/
-function plural( $num ) {
+    */
     if ($num != 1)
         return "s";
 }
 
-/*
+function get_relative_date( $date ) {
+    /*
     Returns relative(more human) date string.
     Uses: `plural`.
 
     Usage:
     `get_relative_date(get_the_date())`
-*/
-function get_relative_date( $date ) {
+    */
     $diff = time() - strtotime($date);
     if ($diff < 60)
         return $diff." second".plural($diff)." ago";
@@ -65,13 +101,13 @@ function get_relative_date( $date ) {
     return date("F j, Y", strtotime($date));
 }
 
-/*
+function the_relative_date( $fallback = 'F d, Y' ) {
+    /*
     Return the post date in relative format.
     Uses: `get_relative_date()`
 
     Must be used within the loop.
-*/
-function the_relative_date( $fallback = 'F d, Y' ) {
+    */
     if (function_exists('get_relative_date')) {
         echo get_relative_date(get_the_date());
     }
@@ -80,7 +116,8 @@ function the_relative_date( $fallback = 'F d, Y' ) {
     }
 }
 
-/*
+function load_theme_widgets( $dir = 'widgets' ) {
+    /*
     Load all .php files inside `widget` folder.
 
     Update 24/10/2010:
@@ -90,8 +127,7 @@ function the_relative_date( $fallback = 'F d, Y' ) {
     Update 08/10/2010:
      Changed TEMPLATEPATH -> STYLESHEETPATH
      to make the path relative to any child theme.
-*/
-function load_theme_widgets( $dir = 'widgets' ) {
+    */
     $files = wp_cache_get('load_theme_widgets', 'sourdough');
 
     if ( $files ) {

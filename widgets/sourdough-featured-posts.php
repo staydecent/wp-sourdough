@@ -27,17 +27,9 @@ if ( !class_exists( 'SourdoughFeaturedPosts' ) ) :
             query_posts('posts_per_page=1');
             while ( have_posts() ) { 
                 the_post();
-                /*
-                    Check if the post has a featured image:
-                     If true, display inside #featured
-                */
-                if ( has_post_thumbnail() ) {
-                    $do_not_duplicate[] = $post->ID;
-                    /*
-                        See: lib/helpers.php -> sourdough_feature()
-                    */
-                    sourdough_feature();
-                }
+                $do_not_duplicate[] = $post->ID;
+
+                get_template_part( 'feature', 'index' );
             }
 
             /*
@@ -64,6 +56,8 @@ if ( !class_exists( 'SourdoughFeaturedPosts' ) ) :
 
                 echo '</div>';
             }
+
+            wp_reset_query();
         }
         
         function update( $new_instance, $old_instance ) {

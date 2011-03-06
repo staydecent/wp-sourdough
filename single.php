@@ -1,21 +1,23 @@
-<?php 
-    get_header();
-?>
+<?php get_header(); ?>
 
-    <div id="content" class="column twelve">
-        <div id="single" class="column eight">
-
+    <div id="content" class="column eight">
+        <h2>News</h2>
         <?php
         /*
-            Load the loop to output posts.
+            Single post loop.
         */
-        get_template_part( 'loop', 'single' );
+        while ( have_posts() ) {
+            the_post();
+            /*
+                Include content file.
+            */
+            get_template_part( 'content', 'single' );
+
+            comments_template( '', true );
+        }
         ?>
+    </div>
 
-        </div>
-
-        <?php get_sidebar() ?>
-
-    </div><!-- #content -->
+    <?php get_sidebar() ?>
 
 <?php get_footer() ?>
