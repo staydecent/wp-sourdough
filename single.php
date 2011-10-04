@@ -1,23 +1,26 @@
 <?php get_header(); ?>
 
-    <div id="content" class="column eight">
-        <h2>News</h2>
+    <div id="body" class="container"><div class="inner">
+
+        <div class="posts col8">
         <?php
-        /*
-            Single post loop.
-        */
-        while ( have_posts() ) {
-            the_post();
             /*
-                Include content file.
+                Single post loop.
             */
-            get_template_part( 'content', 'single' );
+            while ( have_posts() ) {
+                the_post();
+                /*
+                    Include content file.
+                */
+                get_template_part( 'content', 'single' );
 
-            comments_template( '', true );
-        }
+                comments_template( '', true );
+            }
         ?>
-    </div>
+        </div>
 
-    <?php get_sidebar() ?>
+        <?php get_sidebar() ?>
 
-<?php get_footer() ?>
+    </div></div>
+
+<?php get_footer(); ?>

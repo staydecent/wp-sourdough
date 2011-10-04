@@ -1,14 +1,10 @@
-        </div>
-    </div>
+</div> <!-- /main -->
 
-    <footer>
-        <div class="inner">
+<footer class="container"><div class="inner">
 
-            <p>Built with <a href="http://wordpress.org" title="WordPress" rel="generator">WordPress</a> and <a href="http://blog.staydecent.ca/sourdough" title="Sourdough">Sourdough&trade;</a>.</p>
+    <p>Built with <a href="http://wordpress.org" title="WordPress" rel="generator">WordPress</a> and <a href="http://blog.staydecent.ca/sourdough" title="Sourdough">Sourdough&trade;</a>.</p>
 
-        </div>
-    </footer>
-
+</div></footer>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 <script>!window.jQuery && document.write('<script src="<?php bloginfo('template_url') ?>/js/jquery-1.4.2.min.js"><\/script>')</script>

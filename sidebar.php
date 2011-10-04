@@ -1,4 +1,4 @@
-    <div class="sidebar column four last">
+    <div class="sidebar col4 last">
 
     <?php if ( is_home() ) : ?>
 		<div id="home-sidebar">	

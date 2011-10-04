@@ -1,5 +1,5 @@
 <?php global $post_count; ?>
-<div id="post-<?php the_ID() ?>" class="post column five<?php echo ($post_count % 2 == 0) ? ' last' : ''; ?>">
+<div id="post-<?php the_ID() ?>" class="post col6<?php echo ($post_count % 2 == 0) ? ' last' : ''; ?>">
 
     <h2 class="title"><a href="<?php the_permalink() ?>" title="Permalink to <?php the_title() ?>" rel="bookmark"><?php the_title() ?></a></h2>
 

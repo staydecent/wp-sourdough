@@ -1,20 +1,24 @@
-<?php get_header() ?>
+<?php get_header(); ?>
 
-	<div id="content" class="column eight">
-    <?php while ( have_posts() ) : the_post() ?>
+    <div id="body" class="container"><div class="inner">
 
-        <div id="post-<?php the_ID() ?>" class="post">
-            <h2 class="title"><?php the_title() ?></h2>
+        <div class="posts col8">
+        <?php while ( have_posts() ) : the_post() ?>
 
-            <div class="content">
-                <?php the_content( __( 'Read More &raquo;' ) ) ?>
-                <?php wp_link_pages(array('before' => '<p><strong>Pages:</strong> ', 'after' => '</p>', 'next_or_number' => 'number')); ?>
+            <div id="post-<?php the_ID() ?>" class="post">
+                <h2 class="title"><?php the_title() ?></h2>
+
+                <div class="content">
+                    <?php the_content( __( 'Read More &raquo;' ) ) ?>
+                    <?php wp_link_pages(array('before' => '<p><strong>Pages:</strong> ', 'after' => '</p>', 'next_or_number' => 'number')); ?>
+                </div>
             </div>
+
+        <?php endwhile; ?>
         </div>
 
-    <?php endwhile; ?>
-	</div>
+        <?php get_sidebar() ?>
 
-    <?php get_sidebar() ?>
+    </div></div>
 
-<?php get_footer() ?>
+<?php get_footer(); ?>
