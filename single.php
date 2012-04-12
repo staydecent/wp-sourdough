@@ -1,8 +1,8 @@
 <?php get_header(); ?>
 
-    <div id="body" class="container"><div class="inner">
+    <div id="body" class="container"><div class="row">
 
-        <div class="posts col8">
+        <div class="posts span8">
         <?php
             /*
                 Single post loop.

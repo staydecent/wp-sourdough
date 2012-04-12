@@ -3,7 +3,7 @@
     <?php if (!dynamic_sidebar( 'home-widget-area' )) : ?>
     <?php endif; ?>
 
-    <div id="content" class="column eight">
+    <div id="content" class="span8">
         <?php
         /*
             Default post loop.
